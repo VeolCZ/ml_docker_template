@@ -34,7 +34,7 @@ def check_compute():
 def check_environment():
     """Check key environment variables and setup."""
     print("\nEnvironment Checks:")
-    for var in ["PYTHONUNBUFFERED", "PYTHONDONTWRITEBYTECODE", "CUDA_CACHE_MAXSIZE"]:
+    for var in ["PYTHONUNBUFFERED", "PYTHONDONTWRITEBYTECODE", "PYTHONFAULTHANDLER"]:
         value = os.getenv(var, "Not set")
         print(f"{var}: {value}")
 

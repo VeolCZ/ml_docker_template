@@ -28,7 +28,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONFAULTHANDLER=1 \
-    CUDA_CACHE_MAXSIZE=2147483647
+    PYTHONFAULTHANDLER=1
 
 CMD python3 main.py
