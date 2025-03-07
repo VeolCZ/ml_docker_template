@@ -3,10 +3,10 @@ import os
 import sys
 import torch
 import multiprocessing
-import numpy as np
 
 # This program simply tests that your setup is healthy
 # If the output matches your machine feel free to delete and start programming!
+
 
 def check_compute():
     """Check GPU and CPU availability and properties."""
@@ -38,7 +38,7 @@ def check_environment():
         value = os.getenv(var, "Not set")
         print(f"{var}: {value}")
 
-    for path in ["/app", "/app/data", "/app/logs"]:
+    for path in ["/app", "/data", "/logs"]:
         writable = os.access(path, os.W_OK)
         print(f"{path} writable: {writable}")
         if not writable:
@@ -51,7 +51,7 @@ def main():
     check_environment()
 
     if not torch.cuda.is_available() or not all(
-        os.access(p, os.W_OK) for p in ["/app", "/app/data", "/app/logs"]
+        os.access(p, os.W_OK) for p in ["/app", "/data", "/logs"]
     ):
         print("\nHealth Check Failed!")
         sys.exit(1)

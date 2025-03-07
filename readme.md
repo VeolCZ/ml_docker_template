@@ -4,10 +4,12 @@ This repository provides a reusable Docker-based template for Python projects th
 
 #### Prerequisites
 
-    Docker: Installed and running.
-    Docker Compose: Installed (typically included with Docker Desktop).
-    NVIDIA GPU: With compatible drivers installed.
-    NVIDIA Container Toolkit: Installed for GPU support in Docker (see installation guide).
+    Required:
+        - [Docker](https://www.docker.com/get-started/): Installed and running.
+        - Docker Compose: Installed (typically included with Docker Desktop).
+    Optional:
+        - NVIDIA GPU: With compatible [drivers](https://developer.nvidia.com/cuda-downloads) installed.
+        - NVIDIA Container Toolkit: Installed for GPU support in Docker (see [installation guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)).
 
 #### Setup
 
@@ -35,7 +37,7 @@ Add Dependencies: List your Python packages in requirements.txt. Example:
 #### Usage
 Build the Docker image using the build.sh script:
 ```bash
-./build.sh
+bash ./build.sh
 ```
 
 Start the Container

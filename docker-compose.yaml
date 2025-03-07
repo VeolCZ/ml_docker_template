@@ -17,8 +17,8 @@ services:
         tag: "{{.Name}}}"
     volumes:
       - ./app:/app
-      - ./data:/app/data
-      - ./logs:/app/logs
+      - ./data:/data
+      - ./logs:/logs
     runtime: nvidia
     healthcheck:
       test: [ "CMD", "python", "-c", "import sys; sys.exit(0)" ]
