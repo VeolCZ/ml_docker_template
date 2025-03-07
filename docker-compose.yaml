@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  app:
+    container_name: "${PROJECT_NAME}"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        CUDA_VERSION: ${CUDA_VERSION}
+        BASE_IMAGE_TYPE: ${BASE_IMAGE_TYPE}
+        OS_VERSION: ${OS_VERSION}
+    image: ${PROJECT_NAME}:latest
+    logging:
+      driver: "json-file"
+      options:
+        tag: "{{.Name}}}"
+    volumes:
+      - ./app:/app
+      - ./data:/app/data
+      - ./logs:/app/logs
+    runtime: nvidia
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import sys; sys.exit(0)" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    stdin_open: true
+    tty: true
