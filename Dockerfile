@@ -4,12 +4,6 @@ ARG OS_VERSION=ubuntu22.04
 
 FROM nvidia/cuda:${CUDA_VERSION}-${BASE_IMAGE_TYPE}-${OS_VERSION}
 
-RUN mkdir -p /data /logs
-
-COPY requirements.txt .
-
-VOLUME /app /data /logs
-
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
@@ -22,7 +16,14 @@ RUN apt-get update && apt-get install -y \
     gfortran \
     libopenblas-dev
 
+
+COPY requirements.txt .
+
 RUN pip install --no-cache-dir -r requirements.txt && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /data /logs
+
+VOLUME /app /data /logs
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
