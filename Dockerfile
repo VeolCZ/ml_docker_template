@@ -6,6 +6,8 @@ FROM nvidia/cuda:${CUDA_VERSION}-${BASE_IMAGE_TYPE}-${OS_VERSION}
 
 RUN mkdir -p /data /logs
 
+COPY requirements.txt .
+
 VOLUME /app /data /logs
 
 WORKDIR /app
@@ -20,14 +22,10 @@ RUN apt-get update && apt-get install -y \
     gfortran \
     libopenblas-dev
 
-RUN rm -rf /var/lib/apt/lists/*
-
-COPY requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt && rm -rf /var/lib/apt/lists/*
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONFAULTHANDLER=1
 
-CMD python3 main.py
+CMD ["python3", "main.py"]
