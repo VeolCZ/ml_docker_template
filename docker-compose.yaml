@@ -19,9 +19,13 @@ services:
       - ./app:/app
       - ./data:/data
       - ./logs:/logs
+    ports:
+      - "8888:8888"
     runtime: nvidia
+    environment:
+      - RUN_MODE=${RUN_MODE:-script}
     healthcheck:
-      test: [ "CMD", "python", "-c", "import sys; sys.exit(0)" ]
+      test: [ "CMD", "python3", "-c", "import sys; sys.exit(0)" ]
       interval: 30s
       timeout: 5s
       retries: 3

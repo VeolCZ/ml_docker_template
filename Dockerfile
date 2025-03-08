@@ -4,12 +4,6 @@ ARG OS_VERSION=ubuntu22.04
 
 FROM nvidia/cuda:${CUDA_VERSION}-${BASE_IMAGE_TYPE}-${OS_VERSION}
 
-RUN mkdir -p /data /logs
-
-COPY requirements.txt .
-
-VOLUME /app /data /logs
-
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
@@ -20,12 +14,24 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libatlas-base-dev \
     gfortran \
-    libopenblas-dev
+    libopenblas-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /data /logs
+
+VOLUME /app /data /logs
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PYTHONFAULTHANDLER=1
 
-CMD ["python3", "main.py"]
+EXPOSE 8888
+
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
